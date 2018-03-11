@@ -69,8 +69,12 @@ pixels = Pixels()
 
 led_cmd = '/run/led_cmd'
 
-def leds_blue():
-    pixels.listen()
+def leds_on():
+    pixels.wakeup()
+    time.sleep(1)
+
+def leds_think():
+    pixels.think()
     time.sleep(1)
 
 def leds_off():
