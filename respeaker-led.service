@@ -1,0 +1,14 @@
+# ReSpeaker LED service unit file
+[Unit]
+Description = ReSpeaker LED manager
+After = network-online.target
+
+[Service]
+Type = simple
+WorkingDirectory = /srv/respeaker-led
+ExecStartPre = /usr/bin/ssh-agent bash -c 'ssh-add /srv/git-deploy.key; git pull; killall ssh-agent'
+ExecStart = /usr/bin/python daemon.py
+
+[Install]
+WantedBy = multi-user.targe
+WantedBy = kalliope.service
