@@ -1,4 +1,3 @@
-
 import apa102
 import time
 import threading
@@ -30,28 +29,21 @@ class Pixels:
 
         self.last_direction = None
 
-    def wakeup(self, direction=0):
-        self.last_direction = direction
-        def f():
-            self.pattern.wakeup(direction)
+    def blue(self):
+        pixels = [0, 0, 0, 24] * self.PIXELS_N
+        self.show(pixels)
 
-        self.put(f)
+    def green(self):
+        pixels = [0, 0, 24, 0] * self.PIXELS_N
+        self.show(pixels)
 
-    def listen(self):
-        self.put(self.pattern.listen)
-
-    def think(self):
-        self.put(self.pattern.think)
-
-    def speak(self):
-        self.put(self.pattern.speak)
+    def red(self):
+        pixels = [0, 24, 0, 0] * self.PIXELS_N
+        self.show(pixels)
 
     def off(self):
-        self.put(self.pattern.off)
-
-    def put(self, func):
-        self.pattern.stop = True
-        self.queue.put(func)
+        pixels = [0, 0, 0, 0] * self.PIXELS_N
+        self.show(pixels)
 
     def _run(self):
         while True:
@@ -59,36 +51,42 @@ class Pixels:
             self.pattern.stop = False
             func()
 
+    def put(self, func):
+        self.pattern.stop = True
+        self.queue.put(func)
+
     def show(self, data):
         for i in range(self.PIXELS_N):
             self.dev.set_pixel(i, int(data[4*i + 1]), int(data[4*i + 2]), int(data[4*i + 3]))
+            self.dev.show()
 
-        self.dev.show()
 
 pixels = Pixels()
 
 led_cmd = '/run/led_cmd'
 
-def leds_on():
-    pixels.wakeup()
-    time.sleep(1)
+def leds_blue():
+    pixels.blue()
 
-def leds_think():
-    pixels.think()
-    time.sleep(1)
+def leds_green():
+    pixels.green()
+
+def leds_red():
+    pixels.red()
 
 def leds_off():
     pixels.off()
-    time.sleep(1)
     
 if __name__ == '__main__':
     if not os.path.exists(led_cmd):
-        os.mkfifo(led_cmd, 0666)
+        os.mkfifo(led_cmd)
+        os.chown(led_cmd,1000,1000)
 
     fcmd = open(led_cmd, 'r+', 0)
     while True:
         line = fcmd.readline()
         try:
+	    print line.rstrip()
             globals()[line.rstrip()]()
         except:
             pass
