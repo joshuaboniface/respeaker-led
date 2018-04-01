@@ -61,7 +61,7 @@ class Pixels:
 pixels = Pixels()
 
 led_cmd = '/run/led_cmd'
-is_leds_flashing = Event()
+is_leds_flashing = threading.Event()
 
 def leds_darkblue():
     pixels.darkblue()
