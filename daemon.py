@@ -86,7 +86,7 @@ def leds_off():
 
 def leds_blinking(is_leds_flashing, colour):
     colours = {
-        "bloe": "pixels.blue()",
+        "blue": "pixels.blue()",
         "red": "pixels.red()",
         "green": "pixels.green()",
     }
