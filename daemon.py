@@ -77,7 +77,7 @@ def leds_red():
 
 def leds_blink_red():
     is_leds_flashing.set()
-    t = Thread(name='non-block', target=leds_blinking, args=(is_leds_flashing,'red',))
+    t = threading.Thread(name='non-block', target=leds_blinking, args=(is_leds_flashing,'red',))
     print 'test 1'
     t.start()
 
