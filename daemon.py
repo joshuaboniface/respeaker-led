@@ -22,12 +22,12 @@ class Pixels:
         self.thread.daemon = True
         self.thread.start()
 
-    def darkblue(self):
+    def blue(self):
         pixels = [0, 0, 0, 24] * self.PIXELS_N
         self.show(pixels)
 
-    def lightblue(self):
-        pixels = [0, 18, 18, 24] * self.PIXELS_N
+    def white(self):
+        pixels = [0, 24, 24, 24] * self.PIXELS_N
         self.show(pixels)
 
     def green(self):
@@ -63,11 +63,11 @@ pixels = Pixels()
 led_cmd = '/run/led_cmd'
 is_leds_flashing = threading.Event()
 
-def leds_darkblue():
-    pixels.darkblue()
+def leds_blue():
+    pixels.blue()
 
-def leds_lightblue():
-    pixels.lightblue()
+def leds_white():
+    pixels.white()
 
 def leds_green():
     pixels.green()
@@ -86,8 +86,8 @@ def leds_off():
 
 def leds_blinking(is_leds_flashing, colour):
     colours = {
-        "lightblue": pixels.lightblue,
-        "darkblue": pixels.darkblue,
+        "white": pixels.white,
+        "blue": pixels.blue,
         "red": pixels.red,
         "green": pixels.green,
     }
