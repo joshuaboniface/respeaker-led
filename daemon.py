@@ -94,10 +94,10 @@ def leds_blinking(is_leds_flashing, colour):
     }
     while is_leds_flashing.isSet():
         print colour
-        print colours[colour]
-        time.sleep(0.3)
+        colours[colour]()
+        time.sleep(1)
         pixels.off()
-        time.sleep(0.2)
+        time.sleep(1)
     is_leds_flashing.clear()
     return
     
