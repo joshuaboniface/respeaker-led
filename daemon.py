@@ -22,8 +22,12 @@ class Pixels:
         self.thread.daemon = True
         self.thread.start()
 
-    def blue(self):
+    def darkblue(self):
         pixels = [0, 0, 0, 24] * self.PIXELS_N
+        self.show(pixels)
+
+    def lightblue(self):
+        pixels = [0, 12, 12, 24] * self.PIXELS_N
         self.show(pixels)
 
     def green(self):
@@ -57,9 +61,13 @@ class Pixels:
 pixels = Pixels()
 
 led_cmd = '/run/led_cmd'
+is_leds_flashing = Event()
 
-def leds_blue():
-    pixels.blue()
+def leds_darkblue():
+    pixels.darkblue()
+
+def leds_lightblue():
+    pixels.lightblue()
 
 def leds_green():
     pixels.green()
@@ -67,8 +75,28 @@ def leds_green():
 def leds_red():
     pixels.red()
 
+def leds_blink_red():
+    is_leds_flashing.set()
+    t = Thread(name='non-block', target=leds_blinking, args=(is_leds_flashing,colour,))
+    t.start()
+
 def leds_off():
+    is_leds_flashing.clear()
     pixels.off()
+
+def leds_blinking(is_leds_flashing, colour):
+    colours = {
+        "bloe": "pixels.blue()",
+        "red": "pixels.red()",
+        "green": "pixels.green()",
+    }
+    while is_leds_flashing.isSet():
+        colours.get(colour)
+        sleep (0.3)
+        pixels.off()
+        sleep (0.2)
+    is_leds_flashing.clear()
+    return
     
 if __name__ == '__main__':
     if not os.path.exists(led_cmd):
