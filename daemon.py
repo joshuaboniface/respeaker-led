@@ -27,7 +27,7 @@ class Pixels:
         self.show(pixels)
 
     def lightblue(self):
-        pixels = [0, 12, 12, 24] * self.PIXELS_N
+        pixels = [0, 6, 6, 24] * self.PIXELS_N
         self.show(pixels)
 
     def green(self):
