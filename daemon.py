@@ -87,9 +87,9 @@ def leds_off():
 
 def leds_blinking(is_leds_flashing, colour):
     colours = {
-        "blue": "pixels.blue()",
-        "red": "pixels.red()",
-        "green": "pixels.green()",
+        "blue": pixels.blue,
+        "red": pixels.red,
+        "green": pixels.green,
     }
     while is_leds_flashing.isSet():
         print 'test loop'
