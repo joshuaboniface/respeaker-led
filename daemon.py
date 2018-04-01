@@ -76,6 +76,7 @@ def leds_red():
     pixels.red()
 
 def leds_blink_red():
+    print 'test 1'
     t = Thread(name='non-block', target=leds_blinking, args=(is_leds_flashing,colour,))
     is_leds_flashing.set()
     t.start()
@@ -91,7 +92,7 @@ def leds_blinking(is_leds_flashing, colour):
         "green": "pixels.green()",
     }
     while is_leds_flashing.isSet():
-	print test
+        print 'test loop'
         colours.get(colour)
         sleep (0.3)
         pixels.off()
