@@ -6,7 +6,7 @@ After = network-online.target
 [Service]
 Type = simple
 WorkingDirectory = /srv/respeaker-led
-ExecStartPre = /usr/bin/ssh-agent bash -c 'ssh-add /srv/git-deploy.key; git pull; exit 0'
+ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.key' /usr/bin/git pull"
 ExecStart = /usr/bin/python daemon.py
 
 [Install]
