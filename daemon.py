@@ -98,7 +98,8 @@ def leds_held_red():
 
 def leds_off():
     is_leds_flashing.clear()
-    pixels.off()
+    if ! is_leds_held.isSet():
+        pixels.off()
 
 def leds_flashing(is_leds_flashing, colour):
     colours = {
@@ -125,7 +126,7 @@ def leds_held(is_leds_held, colour, holdtime):
     starttime = time.time()
     endtime = starttime + holdtime
     colours[colour]()
-    while is_leds_held.isSet() or endtime > time.time():
+    while is_leds_held.isSet() and endtime > time.time():
         time.sleep(0.1)
     pixels.off()
     is_leds_held.clear()
