@@ -88,12 +88,12 @@ def leds_blink_red():
     t.start()
 
 def leds_held_red():
-    time = 3 # default - 3 seconds
+    holdtime = 3 # default - 3 seconds
 
     is_leds_flashing.clear()
     is_leds_held.set()
 
-    t = threading.Thread(name='non-block', target=leds_held, args=(is_leds_held,'red',time,))
+    t = threading.Thread(name='non-block', target=leds_held, args=(is_leds_held,'red',holdtime,))
     t.start()
 
 def leds_off():
@@ -115,7 +115,7 @@ def leds_flashing(is_leds_flashing, colour):
     is_leds_flashing.clear()
     return
     
-def leds_held(is_leds_held, colour, time):
+def leds_held(is_leds_held, colour, holdtime):
     colours = {
         "white": pixels.white,
         "blue": pixels.blue,
@@ -123,7 +123,7 @@ def leds_held(is_leds_held, colour, time):
         "green": pixels.green,
     }
     starttime = time.time()
-    endtime = starttime + time
+    endtime = starttime + holdtime
     colours[colour]()
     while is_leds_held.isSet() or endtime > time.time():
         time.sleep(0.1)
