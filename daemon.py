@@ -124,7 +124,7 @@ def leds_flashing(is_leds_flashing, colour):
 def hold_leds(colour):
     holdtime = 5 # default - 3 seconds
     is_leds_flashing.clear()
-    time.sleep(0.5) # Wait for the thread to stop
+    time.sleep(0.1) # Wait for the thread to stop
     is_leds_held.set()
     t = threading.Thread(name='non-block', target=leds_held, args=(is_leds_held,colour,holdtime,))
     t.start()
