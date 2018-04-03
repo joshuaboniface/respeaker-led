@@ -98,7 +98,7 @@ def leds_held_red():
 
 def leds_off():
     is_leds_flashing.clear()
-    if ! is_leds_held.isSet():
+    if not is_leds_held.isSet():
         pixels.off()
 
 def leds_flashing(is_leds_flashing, colour):
