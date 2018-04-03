@@ -81,25 +81,24 @@ def leds_red():
     pixels.red()
 
 def leds_blink_red():
-    is_leds_held.clear()
-    is_leds_flashing.set()
-
-    t = threading.Thread(name='non-block', target=leds_flashing, args=(is_leds_flashing,'red',))
-    t.start()
+    flash_leds('red')
 
 def leds_held_red():
-    holdtime = 3 # default - 3 seconds
+    hold_leds('red')
 
-    is_leds_flashing.clear()
-    is_leds_held.set()
-
-    t = threading.Thread(name='non-block', target=leds_held, args=(is_leds_held,'red',holdtime,))
-    t.start()
+def leds_held_green():
+    hold_leds('green')
 
 def leds_off():
     is_leds_flashing.clear()
     if not is_leds_held.isSet():
         pixels.off()
+
+def flash_leds(colour):
+    is_leds_held.clear()
+    is_leds_flashing.set()
+    t = threading.Thread(name='non-block', target=leds_flashing, args=(is_leds_flashing,colour,))
+    t.start()
 
 def leds_flashing(is_leds_flashing, colour):
     colours = {
@@ -115,7 +114,14 @@ def leds_flashing(is_leds_flashing, colour):
         time.sleep(0.5)
     is_leds_flashing.clear()
     return
-    
+
+def hold_leds(colour):
+    holdtime = 5 # default - 3 seconds
+    is_leds_flashing.clear()
+    is_leds_held.set()
+    t = threading.Thread(name='non-block', target=leds_held, args=(is_leds_held,colour,holdtime,))
+    t.start()
+ 
 def leds_held(is_leds_held, colour, holdtime):
     colours = {
         "white": pixels.white,
