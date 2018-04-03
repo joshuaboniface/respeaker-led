@@ -122,7 +122,7 @@ def leds_flashing(is_leds_flashing, colour):
     return
 
 def hold_leds(colour):
-    holdtime = 5 # default - 3 seconds
+    holdtime = 3 # default - 3 seconds
     is_leds_flashing.clear()
     time.sleep(0.1) # Wait for the thread to stop
     is_leds_held.set()
