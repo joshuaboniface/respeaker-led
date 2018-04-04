@@ -7,7 +7,7 @@ After = network-online.target
 Type = simple
 WorkingDirectory = /srv/respeaker-led
 ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.key' /usr/bin/git pull"
-ExecStart = /usr/bin/stdbuf -oL /usr/bin/python daemon.py
+ExecStart = /usr/bin/stdbuf -oL /usr/bin/env python daemon.py
 
 [Install]
 WantedBy = multi-user.target
