@@ -10,5 +10,5 @@ ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.ke
 ExecStart = /usr/bin/stdbuf -oL /usr/bin/python daemon.py
 
 [Install]
-WantedBy = multi-user.targe
+WantedBy = multi-user.target
 WantedBy = kalliope.service
