@@ -8,7 +8,7 @@ Type = simple
 WorkingDirectory = /srv/respeaker-led
 ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.key' /usr/bin/git pull"
 ExecStart = /usr/bin/stdbuf -oL /usr/bin/env python daemon.py
-Restart = onfailure
+Restart = on-failure
 
 [Install]
 WantedBy = multi-user.target
