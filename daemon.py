@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import apa102
 import time
 import threading

@@ -6,8 +6,9 @@ After = network-online.target
 [Service]
 Type = simple
 WorkingDirectory = /srv/respeaker-led
+Environment = PYTHONUNBUFFERED="true"
 ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.key' /usr/bin/git pull"
-ExecStart = /usr/bin/stdbuf -oL /usr/bin/env python daemon.py
+ExecStart = /srv/respeaker-led/daemon.py
 Restart = on-failure
 
 [Install]
