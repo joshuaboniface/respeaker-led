@@ -36,6 +36,10 @@ The client command processor. This tools is incredibly simple, writing the first
 
 This is the main control daemon. Based on some examples from the ReSpeaker project mentioned above, it runs in a loop scanning for commands (i.e. functions to call) from the `led_cmd` pipe and executing them. All commands are Python functions when then call activation functions of the current Pixels() class instance. At the moment this is very clunky and hardcoded (though I do plan to fix that) and all valid commands are listed in the following section.
 
+### `respeaker-led.service`
+
+This is a simple Systemd service unit file which runs `daemon.py` and restarts it on a failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`.
+
 ## Valid functions to call from `trigger.py`
 
 * `leds_off`: Turn all the LEDs off (cancels out all other states except `held` ones).
