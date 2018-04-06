@@ -34,7 +34,7 @@ The client command processor. This tools is incredibly simple, writing the first
 
 ### `daemon.py`
 
-This is the main control daemon. Based on some examples from the ReSpeaker project mentioned above, it runs in a loop scanning for commands (i.e. functions to call) from the `led_cmd` pipe and executing them. All commands are Python functions when then call activation functions of the current Pixels() class instance. At the moment this is very clunky and hardcoded (though I do plan to fix that) and all valid commands are listed in the following section.
+This is the main control daemon. Based on some examples from the ReSpeaker project mentioned above, it runs in a loop scanning for commands (i.e. functions to call) from the `led_cmd` pipe and executing them. All "commands" are simple Python functions which then then call activation functions of the current Pixels() class instance. At the moment this is very clunky and hardcoded (though I do plan to fix that) and all valid commands are listed in the following section.
 
 ### `respeaker-led.service`
 
