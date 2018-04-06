@@ -4,11 +4,8 @@ import apa102
 import time
 import threading
 import os
+import queue
 from gpiozero import LED
-try:
-    import queue as Queue
-except ImportError:
-    import Queue as Queue
 
 class Pixels:
     PIXELS_N = 12
@@ -19,7 +16,7 @@ class Pixels:
         self.power = LED(5)
         self.power.on()
 
-        self.queue = Queue.Queue()
+        self.queue = queue.Queue()
         self.thread = threading.Thread(target=self._run)
         self.thread.daemon = True
         self.thread.start()
