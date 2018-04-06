@@ -38,7 +38,7 @@ This is the main control daemon. Based on some examples from the ReSpeaker proje
 
 ### `respeaker-led.service`
 
-This is a simple Systemd service unit file which runs `daemon.py` and restarts it on a failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`.
+This is a simple Systemd service unit file which runs `daemon.py` and restarts it on a failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`. Note that for my own purposes, running as a dedicated user on many independent Raspbian instances and pulling from my local protected GitLab instance, this requires a Git deploy SSH key located at `/srv/git-deploy.key`; feel free to remove this if you setup does not require such security methods (which a clone from GitHub would not).
 
 ## Valid functions to call from `trigger.py`
 
