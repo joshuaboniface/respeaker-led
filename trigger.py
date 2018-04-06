@@ -16,10 +16,11 @@
 #  $ client.py leds_held_blue [3 seconds]
 #  $ client.py leds_blink_red [until leds_off]
 
+led_cmd = '/run/led_cmd'
+
 import os
 import sys
 
-led_cmd = '/run/led_cmd'
 cmd = sys.argv[1]
 
 fcmd = open(led_cmd, 'w')

@@ -4,6 +4,8 @@
 # Copyright 2018 Joshua Boniface <joshua@boniface.me>
 # See LICENSE for licensing details
 
+led_cmd = '/run/led_cmd'
+
 import apa102
 import time
 import threading
@@ -63,7 +65,6 @@ class Pixels:
 
 pixels = Pixels()
 
-led_cmd = '/run/led_cmd'
 is_leds_flashing = threading.Event()
 is_leds_held = threading.Event()
 
