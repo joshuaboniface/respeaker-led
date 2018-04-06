@@ -1,4 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+
+# ReSpeaker LED daemon.py
+# Copyright 2018 Joshua Boniface <joshua@boniface.me>
+# See LICENSE for licensing details
 
 import apa102
 import time
