@@ -47,7 +47,7 @@ This is a simple Systemd service unit file which runs `daemon.py` and restarts i
 * `leds_blue`: Turn all the LEDs to blue (0/0/24 RGB value).
 * `leds_green`: Turn all the LEDs to green (0/24/0 RGB value).
 * `leds_red`: Turn all the LEDs to green (24/0/0 RGB value).
-* `leds_blink_red`: Set the LEDs to blink red in a 1-second on/off cycle (1/2s on, 1/2 off); this calls the `flash_leds` function that can take a colour as an argument.
+* `leds_blink_red`: Set the LEDs to blink red in a 1-second on/off cycle (1/2s on, 1/2s off); this calls the `flash_leds` function that can take a colour as an argument.
 * `leds_held_red`: Set the LEDs to stay on red for 3 seconds independent of any `leds_off` command; this calls the `hold_leds` function that can take a colour as an argument.
 * `leds_held_green`: Set the LEDs to stay on green for 3 seconds independent of any `leds_off` command; this calls the `hold_leds` function that can take a colour as an argument.
 
