@@ -4,7 +4,7 @@ A simple management daemon for the ReSpeaker 4-mic LED ring
 
 ## What is it?
 
-The [ReSpeaker 4-mic](https://www.seeedstudio.com/ReSpeaker-4-Mic-Array-for-Raspberry-Pi-p-2941.html) is a Raspberry Pi "hat" which provides an array of 4 microphones and an LED ring, used to provide input and user feedback for Pi-based voice control devices such as [my own contraptions](https://www.boniface.me/post/self-hosted-voice-control/). This repository provides a simple daemon to manage the LED components in an asynchronous and extensible way, suitable to be called from another application such as [Kalliope](https://kalliope-project.github.io/) or via the CLI directly.
+The [ReSpeaker 4-mic](https://www.seeedstudio.com/ReSpeaker-4-Mic-Array-for-Raspberry-Pi-p-2941.html) is a Raspberry Pi "hat" which provides an array of 4 microphones and an LED ring, and is used for audio input and user feedback for Pi-based voice control devices such as [my own contraptions](https://www.boniface.me/post/self-hosted-voice-control/). This repository provides a simple daemon to manage the LED components in an asynchronous and extensible way, suitable to be called from another application such as [Kalliope](https://kalliope-project.github.io/) or via the CLI directly.
 
 This daemon is based on the following components:
 * The ReSpeaker project's [4mics_hat](https://github.com/respeaker/4mics_hat) examples.
