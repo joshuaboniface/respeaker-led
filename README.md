@@ -18,7 +18,7 @@ Known issues:
 * The client command interface is a security nightmare, and should not in any way be considered safe for public-facing use.
 * The Python might be... clunky, in a lot of ways.
 
-In short, it does what I need it to do on a single host and no more. I'll probably continue to improve it as time goes on, however in the mean time please feel free to fork and make it your own!
+In short, it does what I need it to do on a single host and no more. I'll probably continue to improve it as time goes on, however in the meantime please feel free to fork and make it your own!
 
 ## How to install it
 
@@ -102,3 +102,7 @@ My main use-case for this daemon, and hence my selection of valid colours, "patt
 ```
 
 Of course, Kalliope isn't the only possible use-case for this daemon, so feel free to adapt it to suit your needs!
+
+## Licensing
+
+This project is licensed under the GNU GPL version `2.0` and includes code from Martin Erzberger licensed under the GNU GPL version `2.0` until such time as this code is released as a discrete module.
