@@ -26,7 +26,7 @@ This repository provides 4 important files: `apa102.py`, `trigger.py`, `daemon.p
 
 ### `apa102.py`
 
-This file is used as a library by `daemon.py` and is soft-forked from Martin Erzberger's library mentioned above.
+This file is used as a library by `daemon.py` and is hard-forked from Martin Erzberger's library mentioned above.
 
 ### `trigger.py`
 
