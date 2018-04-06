@@ -1,8 +1,8 @@
 Copyright 2018 Joshua Boniface <joshua@boniface.me>
 Released under the GNU GPL version 2.0 or any later version.
 
-Includes `apa102.py`:
-Copyright 2016-2017 Martin Erzberger from https://github.com/tinue/APA102_Pi
+Includes `apa102.py` from https://github.com/tinue/APA102_Pi
+Copyright 2016-2017 Martin Erzberger
 Released under the GNU GPL version 2.0.
 
 ---
