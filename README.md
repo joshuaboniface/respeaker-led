@@ -53,6 +53,8 @@ This is a simple Systemd service unit file which runs `daemon.py` and restarts i
 
 ## The use-case
 
+For a full description of the entire project, please see [this post on my website](https://www.boniface.me/post/self-hosted-voice-control/).
+
 My main use-case for this daemon, and hence my selection of valid colours, "patterns", and functions, is as a visual user feedback device for a [Kalliope](https://kalliope-project.github.io/) instance which does not produce any sound responses. To achieve this, the Kalliope instance calls `trigger.py` directly from the `shell` neuron inside its "hook" orders, which are built-in to Kalliope. The following Kalliope `brain.yml` section provides a description of how the functions and colours are used in this context. In words: on startup `leds_blink_red` for 4.2s to indicate successful startup; immediately on responding to a wake trigger, `leds_white`; on listening start (approximately 0.3-0.5s after wake) `leds_blue` until listening stop `leds_off`; if the triggered order is found, `leds_held_green`, otherwise `leds_held_red`; return to waiting for a trigger with `leds_off` though this does not affect the `held` commands from a response to allow the user to see the result without delaying a new wake cycle.
 
 ```
