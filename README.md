@@ -105,4 +105,4 @@ Of course, Kalliope isn't the only possible use-case for this daemon, so feel fr
 
 ## Licensing
 
-This project is licensed under the GNU GPL version `2.0` and includes code from Martin Erzberger licensed under the GNU GPL version `2.0` until such time as this code is released as a discrete module.
+This project is licensed under the GNU GPL version `2.0` and includes code from Martin Erzberger licensed under the GNU GPL version `2.0` until such time as this code is released as a discrete module, at which point this project will be relicensed under the GNU GPL version `3.0`. Contribution to this repository constitutes acceptance of any such future relicensing.
