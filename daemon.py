@@ -239,7 +239,8 @@ if __name__ == '__main__':
                 continue
 
             # Turn on LEDs as colour
-            leds_on(get_rgb(colour))
+            red, green, blue = get_rgb(colour)
+            leds_on(red, green, blue)
 
         # > flash <colour>
         elif command == 'flash':
@@ -252,7 +253,8 @@ if __name__ == '__main__':
                 continue
 
             # Flash LEDs as colour
-            leds_flash(get_rgb(colour))
+            red, green, blue = get_rgb(colour)
+            leds_on(red, green, blue)
 
         # > held <colour> <time>
         elif command == 'hold':
