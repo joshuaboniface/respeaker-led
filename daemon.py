@@ -190,7 +190,7 @@ if __name__ == '__main__':
     try:
         user, group = sys.argv[1].split(':')
     # Or just set the default of root:root
-    except IndexError:
+    except:
         user = 'root'
         group = 'root'
 
