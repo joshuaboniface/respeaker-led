@@ -5,11 +5,11 @@ After = network-online.target
 
 [Service]
 Type = simple
+Restart = on-failure
 WorkingDirectory = /srv/respeaker-led
 Environment = PYTHONUNBUFFERED="true"
 ExecStartPre = /bin/bash -c "GIT_SSH_COMMAND='/usr/bin/ssh -i /srv/git-deploy.key' /usr/bin/git pull"
-ExecStart = /srv/respeaker-led/daemon.py
-Restart = on-failure
+ExecStart = /srv/respeaker-led/daemon.py kalliope:kalliope
 
 [Install]
 WantedBy = multi-user.target
