@@ -99,7 +99,7 @@ def leds_flash(red, blue, green):
     t = threading.Thread(name='non-block', target=flash, args=(is_leds_flashing, red, blue, green, interval, ))
     t.start()
 
-def leds_hold(red, blue, green, time):
+def leds_hold(red, blue, green, holdtime):
     # Clear all flashing and holding events and wait for threads to stop
     is_leds_flashing.clear()
     is_leds_holding.clear()
@@ -109,7 +109,7 @@ def leds_hold(red, blue, green, time):
     is_leds_holding.set()
 
     # Define and start the threaded task
-    t = threading.Thread(name='non-block', target=hold, args=(is_leds_holding, red, blue, green, time, ))
+    t = threading.Thread(name='non-block', target=hold, args=(is_leds_holding, red, blue, green, holdtime, ))
     t.start()
 
 #
