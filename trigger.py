@@ -49,7 +49,7 @@ if cmd == '':
 
 # Try to open the socket writeable
 try:
-    fcmd = open(cmd_socket, 'w')
+    fcmd = open(cmd_socket, 'w+')
 # Or exit with failure
 except:
     print("Failed to open socket!")
