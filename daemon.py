@@ -260,16 +260,16 @@ if __name__ == '__main__':
         elif command == 'hold':
             # Determine the colour and time to hold (seconds, default of 3)
             colour = get_value(line, 1, None, 'No colour specified!')
-            time = get_value(line, 2, 3, None)
+            holdtime = get_value(line, 2, 3, None)
 
             # if colour or time is unset,
-            if colour == None or time == None:
+            if colour == None or holdtime == None:
                 # Abort the command
                 continue
 
             # Hold LEDs as colour for time
             red, green, blue = get_rgb(colour)
-            leds_hold(red, green, blue, time)
+            leds_hold(red, green, blue, holdtime)
 
         # Otherwise,
         else:
