@@ -89,14 +89,11 @@ def leds_flash(red, blue, green):
     is_leds_holding.clear()
     time.sleep(0.1)
 
-    # Set default interval
-    interval = 0.5
-
     # Set the event
     is_leds_flashing.set()
 
     # Define and start the threaded task
-    t = threading.Thread(name='non-block', target=flash, args=(is_leds_flashing, red, blue, green, interval, ))
+    t = threading.Thread(name='non-block', target=flash, args=(is_leds_flashing, red, blue, green, ))
     t.start()
 
 def leds_hold(red, blue, green, holdtime):
@@ -115,7 +112,10 @@ def leds_hold(red, blue, green, holdtime):
 #
 # Threaded functions
 #
-def flash(event, red, blue, green, interval):
+def flash(event, red, blue, green):
+    # Set default interval
+    interval = 0.5
+
     # As long as the event is set,
     while event.isSet():
         # Turn on LEDs and sleep for interval
