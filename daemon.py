@@ -174,6 +174,7 @@ def get_rgb(colour):
         "red": "24,0,0",
         "green": "0,24,0",
         "blue": "0,0,24",
+        "yellow": "24,24,0",
         "cyan": "0,24,24",
         "magenta": "24,0,24",
         "white": "24,24,24",
