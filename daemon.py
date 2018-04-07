@@ -120,10 +120,10 @@ def flash(event, red, blue, green):
     while event.isSet():
         # Turn on LEDs and sleep for interval
         pixels.on(red, blue, green)
-        time.sleep(0.5)
+        time.sleep(interval)
         # Turn off LEDs and sleep for interval
         pixels.off()
-        time.sleep(0.5)
+        time.sleep(interval)
 
     # Clear the event
     event.clear()
@@ -254,7 +254,7 @@ if __name__ == '__main__':
 
             # Flash LEDs as colour
             red, green, blue = get_rgb(colour)
-            leds_on(red, green, blue)
+            leds_flash(red, green, blue)
 
         # > held <colour> <time>
         elif command == 'hold':
