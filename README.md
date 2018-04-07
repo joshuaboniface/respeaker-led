@@ -10,25 +10,29 @@ This daemon is based on the following components:
 * The ReSpeaker project's [4mics_hat](https://github.com/respeaker/4mics_hat) examples.
 * Martin Erzberger's [APA102_Pi](https://github.com/tinue/APA102_Pi) library (included in the above and retained verbatim here).
 
-## How to install it
+## How to use it
 
-This repository provides 4 important files: `apa102.py`, `trigger.py`, `daemon.py`, and `respeaker-led.service`.
+### Python Dependencies
 
-### `apa102.py`
+* `gpiozero`
 
-This file is used as a library by `daemon.py` to interface with the ReSpeaker's APA102 LED array and is hard-forked from Martin Erzberger's library mentioned above.
+### Main Files
 
-### `trigger.py`
+#### `apa102.py`
 
-The client command processor. This tool sends its arguments to the `cmd_socket` (by default `/run/respeaker-led.sock`) of the daemon and then exits.
+A library used by `daemon.py` to interface with the ReSpeaker's APA102 LED array. Hard-forked from Martin Erzberger's library mentioned above.
 
-### `daemon.py`
+#### `trigger.py`
+
+The client command processor. It sends its arguments to the `cmd_socket` (by default `/run/respeaker-led.sock`) of the daemon and then exits.
+
+#### `daemon.py`
 
 This is the main control daemon. It first opens a command pipe at `cmd_socket`, then runs in a loop scanning for commands from the pipe and executing them.
 
-### `respeaker-led.service`
+#### `respeaker-led.service`
 
-This is a simple Systemd service unit file which runs `daemon.py` and restarts it on a failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`. Note that for my own purposes, running as a dedicated user on many independent Raspbian instances and pulling from my local protected GitLab instance, this requires a Git deploy SSH key located at `/srv/git-deploy.key`; you should remove this if your setup does not require such security methods (which a clone from GitHub would not).
+A simple Systemd service unit file to run `daemon.py` and restart it on failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`. Note that for my own purposes, running as a dedicated user on many independent Raspbian instances and pulling from my local protected GitLab instance, this requires a Git deploy SSH key located at `/srv/git-deploy.key`; you should remove this if your setup does not require such security methods (which a clone from GitHub would not).
 
 ## Usage of `daemon.py`
 
