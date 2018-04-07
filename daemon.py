@@ -268,7 +268,8 @@ if __name__ == '__main__':
                 continue
 
             # Hold LEDs as colour for time
-            leds_hold(get_rbd(colour), time)
+            red, green, blue = get_rgb(colour)
+            leds_hold(red, green, blue, time)
 
         # Otherwise,
         else:
