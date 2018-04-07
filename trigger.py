@@ -63,4 +63,4 @@ fcmd.flush()
 fcmd.close()
 
 # Exit with success
-exit (0)
+exit(0)
