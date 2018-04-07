@@ -44,11 +44,11 @@ class Pixels:
             self.dev.set_pixel(i, int(data[4*i + 1]), int(data[4*i + 2]), int(data[4*i + 3]))
             self.dev.show()
 
-    def on(red, green, blue):
+    def on(self, red, green, blue):
         pixels = [0, red, green, blue] * self.PIXELS_N
         self.show(pixels)
 
-    def off():
+    def off(self):
         pixels = [0, 0, 0, 0] * self.PIXELS_N
         self.show(pixels)
 
