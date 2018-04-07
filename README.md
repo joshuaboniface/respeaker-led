@@ -134,7 +134,7 @@ My main use-case for this daemon, and hence my selection of valid colours, "patt
   signals: []
   neurons:
     - shell:
-        cmd: /srv/respeaker-led/trigger.py blink magenta
+        cmd: /srv/respeaker-led/trigger.py flash magenta
     - shell:
         cmd: /bin/sleep 4.5 # Just long enough for 5 blinks
 ```
