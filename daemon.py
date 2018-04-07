@@ -70,7 +70,7 @@ def leds_off():
     time.sleep(0.1)
 
     # If we're not held,
-    if not is_leds_held.isSet():
+    if not is_leds_holding.isSet():
         # Turn off LEDs
         pixels.off()
 
@@ -239,7 +239,7 @@ if __name__ == '__main__':
                 continue
 
             # Turn on LEDs as colour
-            leds_on(get_rbg(colour))
+            leds_on(get_rgb(colour))
 
         # > flash <colour>
         elif command == 'flash':
@@ -252,7 +252,7 @@ if __name__ == '__main__':
                 continue
 
             # Flash LEDs as colour
-            leds_flash(get_rbg(colour))
+            leds_flash(get_rgb(colour))
 
         # > held <colour> <time>
         elif command == 'hold':
