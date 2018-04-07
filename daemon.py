@@ -260,7 +260,7 @@ if __name__ == '__main__':
         elif command == 'hold':
             # Determine the colour and time to hold (seconds, default of 3)
             colour = get_value(line, 1, None, 'No colour specified!')
-            holdtime = get_value(line, 2, 3, None)
+            holdtime = int(get_value(line, 2, 3, None))
 
             # if colour or time is unset,
             if colour == None or holdtime == None:
