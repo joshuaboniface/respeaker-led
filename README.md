@@ -60,7 +60,7 @@ A simple Systemd service unit file to run `daemon.py` and restart it on failure.
 
 User/Group:
 
-* The user and group names that should own the `cmd_socket` file (mode 644); defaults to `root:root` without a full specification
+* The user and group names that should own the `cmd_socket` file (mode 644); defaults to `root:root` if not set or invalid
 
 ### Usage of `trigger.py`
 
@@ -85,7 +85,7 @@ Colours:
 
 Holdtime:
 
-* The duration in seconds to keep the LEDs on (`hold` action only)
+* The duration in seconds to keep the LEDs on (`hold` action only); defaults to 3 seconds if not set
 
 ## The use-case
 
