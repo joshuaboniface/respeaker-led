@@ -32,7 +32,7 @@ def usage():
 # Define our socket to talk to the daemon
 cmd_socket = '/run/respeaker-led.sock'
 
-import os, sys
+import os, sys, posix
 
 # Get the command from the CLI
 try:
@@ -47,9 +47,9 @@ if cmd == '':
     usage()
     exit(1)
 
-# Try to open the socket writeable
+# Try to open the socket writeable in POSIX mode (nonblocking)
 try:
-    fcmd = open(cmd_socket, 'w')
+    fcmd = posix.open(cmd_socket, posix.O_RDWR)
 # Or exit with failure
 except:
     print("Failed to open socket!")
