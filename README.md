@@ -12,6 +12,26 @@ This daemon is based on the following components:
 
 ## How to use it
 
+### Installation
+
+0. Clone this repo into an available directory (I use `/srv`):
+    ```
+    cd /srv
+    git clone <repo>
+    ```
+0. Enable the service unit file:
+    ```
+    systemctl enable /srv/respeaker-led/respeaker-led.service
+    ```
+0. Start the service:
+    ```
+    systemctl start respeaker-led.service
+    ```
+0. Trigger a test command:
+    ```
+    /srv/respeaker-led/trigger.py hold white 5
+    ```
+
 ### Python Dependencies
 
 * `gpiozero`
@@ -34,7 +54,7 @@ This is the main control daemon. It first opens a command pipe at `cmd_socket`, 
 
 A simple Systemd service unit file to run `daemon.py` and restart it on failure. It features a nifty pre-start command to automatically `git pull` the repo to ensure it's up-to-date (and simplifying administrator or developer work when modifying the daemon - just restart it to get the latest code!) and can be easily enabled from within the repo by running `systemctl enable /path/to/respeaker-led/respeaker-led.service`. Note that for my own purposes, running as a dedicated user on many independent Raspbian instances and pulling from my local protected GitLab instance, this requires a Git deploy SSH key located at `/srv/git-deploy.key`; you should remove this if your setup does not require such security methods (which a clone from GitHub would not).
 
-## Usage of `daemon.py`
+### Usage of `daemon.py`
 
 `$ daemon.py [<user>:<group>]`
 
@@ -42,7 +62,7 @@ User/Group:
 
 * The user and group names that should own the `cmd_socket` file (mode 644); defaults to `root:root` without a full specification
 
-## Usage of `trigger.py`
+### Usage of `trigger.py`
 
 `$ trigger.py <action> [<colour>] [<holdtime>]`
 
