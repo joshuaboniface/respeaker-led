@@ -81,7 +81,7 @@ Colours:
 * green
 * yellow
 * cyan
-* magenta`
+* magenta
 
 Holdtime:
 
