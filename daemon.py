@@ -2,7 +2,7 @@
 
 # ReSpeaker LED daemon.py
 # Copyright 2018 Joshua Boniface <joshua@boniface.me>
-# See LICENSE for licensing details
+# Released under the GNU GPL version 3.0 or any later version.
 
 cmd_socket = '/run/respeaker-led.sock'
 

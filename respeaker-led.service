@@ -1,4 +1,6 @@
 # ReSpeaker LED service unit file
+# Copyright 2018 Joshua Boniface <joshua@boniface.me>
+# Released under the GNU GPL version 3.0 or any later version.
 [Unit]
 Description = ReSpeaker LED manager
 After = network-online.target
