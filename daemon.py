@@ -211,7 +211,7 @@ if __name__ == '__main__':
 
     # Open socket
     print('Opening socket at %s' % cmd_socket)
-    fcmd = open(cmd_socket, 'r')
+    fcmd = open(cmd_socket, 'r', 0)
 
     # Listen for events on socket
     print('Listening...')
