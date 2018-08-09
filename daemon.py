@@ -211,13 +211,16 @@ if __name__ == '__main__':
 
     # Open socket
     print('Opening socket at %s' % cmd_socket)
-    fcmd = open(cmd_socket, 'r', 0)
+    fcmd = open(cmd_socket, 'r')
 
     # Listen for events on socket
     print('Listening...')
     while True:
         # Get a line from the socket
-        line = fcmd.readline().rstrip().split()
+        try:
+            line = fcmd.readlines()[0].rstrip().split()
+        except:
+            continue
         print('%s' % str(line))
 
         # Determine the command
