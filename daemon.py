@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # ReSpeaker LED daemon.py
 # Copyright 2018 Joshua Boniface <joshua@boniface.me>
@@ -6,9 +6,8 @@
 
 cmd_socket = '/run/respeaker-led.sock'
 
-import os, sys, threading, time
-import apa102
-import Queue
+import os, sys, threading, time, queue
+from driver import apa102
 from gpiozero import LED
 from pwd import getpwnam
 
@@ -24,7 +23,7 @@ class Pixels:
         self.power = LED(5)
         self.power.on()
 
-        self.queue = Queue.Queue()
+        self.queue = queue.Queue()
         self.thread = threading.Thread(target=self._run)
         self.thread.daemon = True
         self.thread.start()
@@ -212,7 +211,7 @@ if __name__ == '__main__':
 
     # Open socket
     print('Opening socket at %s' % cmd_socket)
-    fcmd = open(cmd_socket, 'r+', 0)
+    fcmd = open(cmd_socket, 'r', 0)
 
     # Listen for events on socket
     print('Listening...')
