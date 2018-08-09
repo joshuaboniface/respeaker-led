@@ -38,10 +38,6 @@ This daemon is based on the following components:
 
 ### Main Files
 
-#### `apa102.py`
-
-A library used by `daemon.py` to interface with the ReSpeaker's APA102 LED array. Hard-forked from Martin Erzberger's library mentioned above.
-
 #### `trigger.py`
 
 The client command processor. It sends its arguments to the `cmd_socket` (by default `/run/respeaker-led.sock`) of the daemon and then exits.
