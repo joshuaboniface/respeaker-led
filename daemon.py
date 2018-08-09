@@ -211,67 +211,69 @@ if __name__ == '__main__':
 
     # Open socket
     print('Opening socket at %s' % cmd_socket)
-    fcmd = open(cmd_socket, 'r', 0)
+    with open(cmd_socket, 'r') as fr:
 
-    # Listen for events on socket
-    print('Listening...')
-    while True:
-        # Get a line from the socket
-        line = fcmd.readline().rstrip().split()
-        print('%s' % str(line))
+        # Listen for events on socket
+        print('Listening...')
+        while True:
+            # Get a line from the socket
+            line = fr.readline().rstrip().split()
+            print('%s' % str(line))
+    
+            # Determine the command
+            command = get_value(line, 0, None, 'No command specified!')
+    
+            # > off
+            if command == 'off':
+                # Turn off LEDs
+                leds_off()
+    
+            # > on <colour>
+            elif command == 'on':
+                # Determine the colour
+                colour = get_value(line, 1, None, 'No colour specified!')
+    
+                # If colour is unset,
+                if colour == None:
+                    # Abort the command
+                    continue
+    
+                # Turn on LEDs as colour
+                red, green, blue = get_rgb(colour)
+                leds_on(red, green, blue)
+    
+            # > flash <colour>
+            elif command == 'flash':
+                # Determine the colour
+                colour = get_value(line, 1, None, 'No colour specified!')
+    
+                # If colour is unset,
+                if colour == None:
+                    # Abort the command
+                    continue
+    
+                # Flash LEDs as colour
+                red, green, blue = get_rgb(colour)
+                leds_flash(red, green, blue)
+    
+            # > held <colour> <time>
+            elif command == 'hold':
+                # Determine the colour and time to hold (seconds, default of 3)
+                colour = get_value(line, 1, None, 'No colour specified!')
+                holdtime = int(get_value(line, 2, 3, None))
+    
+                # if colour or time is unset,
+                if colour == None or holdtime == None:
+                    # Abort the command
+                    continue
+    
+                # Hold LEDs as colour for time
+                red, green, blue = get_rgb(colour)
+                leds_hold(red, green, blue, holdtime)
+    
+            # Otherwise,
+            else:
+                # This was an invalid command
+                print('Invalid command!')
 
-        # Determine the command
-        command = get_value(line, 0, None, 'No command specified!')
-
-        # > off
-        if command == 'off':
-            # Turn off LEDs
-            leds_off()
-
-        # > on <colour>
-        elif command == 'on':
-            # Determine the colour
-            colour = get_value(line, 1, None, 'No colour specified!')
-
-            # If colour is unset,
-            if colour == None:
-                # Abort the command
-                continue
-
-            # Turn on LEDs as colour
-            red, green, blue = get_rgb(colour)
-            leds_on(red, green, blue)
-
-        # > flash <colour>
-        elif command == 'flash':
-            # Determine the colour
-            colour = get_value(line, 1, None, 'No colour specified!')
-
-            # If colour is unset,
-            if colour == None:
-                # Abort the command
-                continue
-
-            # Flash LEDs as colour
-            red, green, blue = get_rgb(colour)
-            leds_flash(red, green, blue)
-
-        # > held <colour> <time>
-        elif command == 'hold':
-            # Determine the colour and time to hold (seconds, default of 3)
-            colour = get_value(line, 1, None, 'No colour specified!')
-            holdtime = int(get_value(line, 2, 3, None))
-
-            # if colour or time is unset,
-            if colour == None or holdtime == None:
-                # Abort the command
-                continue
-
-            # Hold LEDs as colour for time
-            red, green, blue = get_rgb(colour)
-            leds_hold(red, green, blue, holdtime)
-
-        # Otherwise,
-        else:
-            # This was an invalid command
-            print('Invalid command!')
+        fr.close()
