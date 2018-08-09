@@ -8,7 +8,7 @@ The [ReSpeaker 4-mic](https://www.seeedstudio.com/ReSpeaker-4-Mic-Array-for-Rasp
 
 This daemon is based on the following components:
 * The ReSpeaker project's [4mics_hat](https://github.com/respeaker/4mics_hat) examples.
-* Martin Erzberger's [APA102_Pi](https://github.com/tinue/APA102_Pi) library (included in the above and retained verbatim here).
+* Martin Erzberger's [APA102_Pi](https://github.com/tinue/APA102_Pi) library.
 
 ## How to use it
 
@@ -143,4 +143,4 @@ Of course, Kalliope isn't the only possible use-case for this daemon, so feel fr
 
 ## Licensing
 
-This project is licensed under the GNU GPL version `2.0` or any later version. It includes code from Martin Erzberger licensed under the GNU GPL version `2.0`.
+This project is licensed under the GNU GPL version `3.0` or any later version.
