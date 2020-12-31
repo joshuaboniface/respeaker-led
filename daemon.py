@@ -7,7 +7,7 @@
 cmd_socket = '/run/respeaker-led.sock'
 
 import os, sys, threading, time, queue
-from driver import apa102
+from apa102_pi.driver.apa102 import APA102
 from gpiozero import LED
 from pwd import getpwnam
 
@@ -18,7 +18,7 @@ class Pixels:
     PIXELS_N = 12
 
     def __init__(self):
-        self.dev = apa102.APA102(num_led=self.PIXELS_N)
+        self.dev = APA102(num_led=self.PIXELS_N)
         
         self.power = LED(5)
         self.power.on()
@@ -243,6 +243,7 @@ if __name__ == '__main__':
 
             # Turn on LEDs as colour
             red, green, blue = get_rgb(colour)
+
             leds_on(red, green, blue)
 
         # > flash <colour>
