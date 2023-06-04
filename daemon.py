@@ -220,6 +220,7 @@ if __name__ == '__main__':
         try:
             line = fcmd.readlines()[0].rstrip().split()
         except:
+            time.sleep(0.1)
             continue
         print('%s' % str(line))
 
