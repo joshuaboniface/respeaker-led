@@ -51,8 +51,8 @@ if cmd == '':
 try:
     fcmd = open(cmd_socket, 'w+')
 # Or exit with failure
-except:
-    print("Failed to open socket!")
+except Exception as e:
+    print(f"Failed to open socket! Error: {e}")
     exit(1)
 
 # Print argument string to socket
