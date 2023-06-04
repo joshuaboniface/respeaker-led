@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # ReSpeaker LED client trigger.py
 # Copyright 2018 Joshua Boniface <joshua@boniface.me>
