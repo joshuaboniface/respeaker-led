@@ -49,14 +49,14 @@ if cmd == '':
 
 # Try to open the socket writeable
 try:
-    fcmd = open(cmd_socket, 'w+')
+    fcmd = open(cmd_socket, 'wb+', buffering=0)
 # Or exit with failure
 except Exception as e:
     print(f"Failed to open socket! Error: {e}")
     exit(1)
 
 # Print argument string to socket
-fcmd.write(str(cmd) + '\n')
+fcmd.write(f"{cmd} + '\n'".encode())
 
 # Flush and close the socket
 fcmd.flush()
