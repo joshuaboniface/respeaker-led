@@ -101,10 +101,16 @@ class Pixels:
         except KeyError:
             print(f"Invalid colour '{name}', selecting 'white' instead")
             return colour_map['white']
-    
+   
+    def hold_callback(self, timeout):
+        sleep(timeout + 0.1)
+        self.is_holding = False
+
     def start(self, command_name, colour_name=None, extarg=None):
         if command_name in ['hold']:
             self.is_holding = True
+            self.hold_thread = Thread(target=self.hold_callback, args=(extarg,))
+            self.hold_thread.start()
 
         if command_name in ['off', 'stop']:
             if self.is_holding:
@@ -169,8 +175,6 @@ class Pixels:
         self.solid(colour)
         sleep(holdtime)
         self.off()
-        self.is_holding = False
-        self.proc = None
 
     def flash(self, colour, interval=1):
         """
