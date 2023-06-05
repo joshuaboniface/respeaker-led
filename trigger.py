@@ -76,7 +76,7 @@ except Exception as e:
     exit(1)
 
 # Print argument string to socket
-fcmd.write(f"{cmd}".encode())
+fcmd.write(f"{cmd}\n".encode())
 
 # Flush and close the socket
 fcmd.flush()

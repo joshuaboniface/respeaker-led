@@ -66,9 +66,9 @@ class Pixels:
 
     def parse_command_name(self, name):
         command_map = {
-            None:     self.stop,
-            'off':    self.stop,
-            'stop':   self.stop,
+            None:     None,
+            'off':    None,
+            'stop':   None,
             'on':     self.solid,
             'solid':  self.solid,
             'hold':   self.hold,
@@ -103,13 +103,16 @@ class Pixels:
             return colour_map['white']
     
     def start(self, command_name, colour_name=None, extarg=None):
-        
         if command_name in ['hold']:
             self.is_holding = True
 
         if command_name in ['off', 'stop']:
-            self.stop()
-            return
+            if self.is_holding:
+                print("Got 'off' but still holding, returning")
+                return
+            else:
+                self.stop()
+                return
 
         command = self.parse_command_name(command_name)
         colour = self.parse_colour_name(colour_name)
@@ -119,17 +122,17 @@ class Pixels:
         else:
             args = (colour, )
 
-        self.proc = Process(target=command, args=args)
-        self.proc.start()
+        if self.proc is not None:
+            self.stop()
+
+        if command is not None:
+            self.proc = Process(target=command, args=args)
+            self.proc.start()
 
     def stop(self):
-        if self.is_holding:
-            # We're still holding, so don't stop anything; the proc will end on
-            # its own if needed, or be overwritten
-            return
-
         try:
             self.proc.terminate()
+            self.proc = None
         except Exception:
             # If we can't terminate, we just move to switching pixels off
             pass
@@ -167,6 +170,7 @@ class Pixels:
         sleep(holdtime)
         self.off()
         self.is_holding = False
+        self.proc = None
 
     def flash(self, colour, interval=1):
         """
@@ -243,9 +247,6 @@ class Daemon:
                 extarg = None
     
             print(f"Received command: {command}; colour: {colour}; extra arg: {extarg}")
-    
-            # Stop any current actions (this is all that's needed for off and stop)
-            self.pixels.stop()
     
             # Execute the new command
             if extarg is not None:
