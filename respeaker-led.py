@@ -64,9 +64,62 @@ class Pixels:
 
         self.is_holding = False
 
-    def start(self, target, *args):
-        self.is_holding = False
-        self.proc = Process(target=target, args=args)
+    def parse_command_name(self, name):
+        command_map = {
+            None:     self.stop,
+            'off':    self.stop,
+            'stop':   self.stop,
+            'on':     self.solid,
+            'solid':  self.solid,
+            'hold':   self.hold,
+            'flash':  self.flash,
+            'blink':  self.flash,
+            'spin':   self.spin,
+            'rotate': self.spin,
+        }
+    
+        try:
+            return command_map[name]
+        except KeyError:
+            print(f"Invalid command '{name}', selecting 'off' instead")
+            return None
+    
+    def parse_colour_name(self, name):
+        colour_map = {
+            None:       (0,   0,   0),
+            'red':      (255, 0,   0),
+            'green':    (0,   255, 0),
+            'blue':     (0,   0,   255),
+            'yellow':   (255, 255, 0),
+            'cyan':     (0,   255, 255),
+            'magenta':  (255, 0,   255),
+            'white':    (255, 255, 255),
+        }
+    
+        try:
+            return colour_map[name]
+        except KeyError:
+            print(f"Invalid colour '{name}', selecting 'white' instead")
+            return colour_map['white']
+    
+    def start(self, command_name, colour_name=None, extarg=None):
+        
+        if command_name in ['hold']:
+            self.is_holding = True
+
+        if command_name in ['off', 'stop']:
+            self.stop()
+            return
+
+        command = self.parse_command_name(command_name)
+        colour = self.parse_colour_name(colour_name)
+
+        if extarg is not None:
+            args = (colour, extarg)
+        else:
+            args = (colour, )
+
+        self.proc = Process(target=command, args=args)
         self.proc.start()
 
     def stop(self):
@@ -110,11 +163,9 @@ class Pixels:
         """
         Hold a solid colour for {holdtime} or until stopped
         """
-        self.is_holding = True
         self.solid(colour)
         sleep(holdtime)
-        if self.is_holding:
-            self.off()
+        self.off()
         self.is_holding = False
 
     def flash(self, colour, interval=1):
@@ -138,44 +189,6 @@ class Pixels:
                 self.show(i, (0, 0, 0))
 
 class Daemon:
-    def parse_command_name(self, name):
-        command_map = {
-            None:     self.pixels.stop,
-            'off':    self.pixels.stop,
-            'stop':   self.pixels.stop,
-            'on':     self.pixels.solid,
-            'solid':  self.pixels.solid,
-            'hold':   self.pixels.hold,
-            'flash':  self.pixels.flash,
-            'blink':  self.pixels.flash,
-            'spin':   self.pixels.spin,
-            'rotate': self.pixels.spin,
-        }
-    
-        try:
-            return command_map[name]
-        except KeyError:
-            print(f"Invalid command '{name}', selecting 'off' instead")
-            return None
-    
-    def parse_colour_name(self, name):
-        colour_map = {
-            None:       (0,   0,   0),
-            'red':      (255, 0,   0),
-            'green':    (0,   255, 0),
-            'blue':     (0,   0,   255),
-            'yellow':   (255, 255, 0),
-            'cyan':     (0,   255, 255),
-            'magenta':  (255, 0,   255),
-            'white':    (255, 255, 255),
-        }
-    
-        try:
-            return colour_map[name]
-        except KeyError:
-            print(f"Invalid colour '{name}', selecting 'white' instead")
-            return colour_map['white']
-    
                 
     def __init__(self):
         # Setup the socket listener
@@ -231,28 +244,21 @@ class Daemon:
     
             print(f"Received command: {command}; colour: {colour}; extra arg: {extarg}")
     
-    
             # Stop any current actions (this is all that's needed for off and stop)
             self.pixels.stop()
     
             # Execute the new command
-            if command not in ['off', 'stop']:
-                action = self.parse_command_name(command)
-                if action is None:
-                    continue
-    
-                colours = self.parse_colour_name(colour)
-    
-                if extarg is not None:
-                    self.pixels.start(action, colours, extarg)
-                else:
-                    self.pixels.start(action, colours)
+            if extarg is not None:
+                self.pixels.start(command, colour, extarg)
+            else:
+                self.pixels.start(command, colour)
    
 if __name__ == '__main__':
     daemon = Daemon()
     try:
         daemon.run()
-    except:
-        pass
+    except Exception as e:
+        print("Fatal exception: {e}")
+        raise
     finally:
         daemon.stop()
