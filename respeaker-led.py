@@ -62,16 +62,25 @@ class Pixels:
 
         self.proc = None
 
+        self.is_holding = False
+
     def start(self, target, *args):
+        self.is_holding = False
         self.proc = Process(target=target, args=args)
         self.proc.start()
 
     def stop(self):
+        if self.is_holding:
+            # We're still holding, so don't stop anything; the proc will end on
+            # its own if needed, or be overwritten
+            return
+
         try:
             self.proc.terminate()
         except Exception:
             # If we can't terminate, we just move to switching pixels off
             pass
+
         self.off()
 
     def show(self, pixel, colour):
@@ -101,9 +110,12 @@ class Pixels:
         """
         Hold a solid colour for {holdtime} or until stopped
         """
+        self.is_holding = True
         self.solid(colour)
         sleep(holdtime)
-        self.off()
+        if self.is_holding:
+            self.off()
+        self.is_holding = False
 
     def flash(self, colour, interval=1):
         """
