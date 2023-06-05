@@ -10,7 +10,7 @@ Type = simple
 Restart = on-failure
 WorkingDirectory = /srv/respeaker-led
 Environment = PYTHONUNBUFFERED="true"
-ExecStart = /srv/respeaker-led/daemon.py kalliope:kalliope
+ExecStart = /srv/respeaker-led/respeaker-led.py
 
 [Install]
 WantedBy = multi-user.target

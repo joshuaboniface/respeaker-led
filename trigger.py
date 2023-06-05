@@ -1,38 +1,58 @@
 #!/usr/bin/env python3
 
-# ReSpeaker LED client trigger.py
-# Copyright 2018 Joshua Boniface <joshua@boniface.me>
-# Released under the GNU GPL version 3.0 or any later version.
+# ResSpeaker LED feedback trigger client
+#
+# Provides a convenient command to trigger actions to the ReSpeaker LED
+# feedback daemon ("respeaker-led.py").
+#
+# Run without arguments for help.
+#
+#    Copyright (C) 2017-2023 Joshua M. Boniface <joshua@boniface.me>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+###############################################################################
+
+
+import os
+import sys
 
 def usage():
     print('trigger.py: Send a command to the respeaker-led daemon')
     print('')
     print('Usage:')
     print('')
-    print('$ trigger.py <action> [<colour>] [<holdtime>]')
+    print('$ trigger.py <action> <colour> [<extarg>]')
     print('')
     print('Actions:')
-    print('  off: Turn off LEDs (unless held)')
-    print('  on: Turn on LEDs until next off action')
-    print('  flash: Flash LEDs until next off action')
-    print('  hold: Keep LEDs on for a specific time unless overridden')
+    print('  off: Turn off LEDs; {colour} is ignored/optional')
+    print('  on: Turn on LEDs until next action')
+    print('  flash: Flash LEDs until next action; {extarg} is the optional flash interval (default 1s)')
+    print('  spin: Spin the LEDs until next action; {extarg} is the optional cycle time (default 1s)')
+    print('  hold: Keep LEDs on for {extarg} seconds (default 5s) unless overridden')
     print('')
     print('Colours:')
     print('  white red blue green yellow cyan magenta')
     print('')
-    print('Holdtime:')
-    print('  The duration in seconds to keep the LEDs on for hold action')
-    print('')
     print('Examples:')
     print('  $ trigger.py off')
     print('  $ trigger.py on red')
-    print('  $ trigger.py hold white 5')
     print('  $ trigger.py flash cyan')
+    print('  $ trigger.py spin yellow')
+    print('  $ trigger.py hold white')
 
 # Define our socket to talk to the daemon
-cmd_socket = '/run/respeaker-led.sock'
-
-import os, sys
+COMMAND_SOCKET = '/run/shm/respeaker-led.sock'
 
 # Get the command from the CLI
 try:
@@ -49,14 +69,14 @@ if cmd == '':
 
 # Try to open the socket writeable
 try:
-    fcmd = open(cmd_socket, 'wb+', buffering=0)
+    fcmd = open(COMMAND_SOCKET, 'wb+', buffering=0)
 # Or exit with failure
 except Exception as e:
     print(f"Failed to open socket! Error: {e}")
     exit(1)
 
 # Print argument string to socket
-fcmd.write(f"{cmd} + '\n'".encode())
+fcmd.write(f"{cmd}".encode())
 
 # Flush and close the socket
 fcmd.flush()
