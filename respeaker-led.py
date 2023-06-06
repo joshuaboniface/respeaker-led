@@ -106,10 +106,12 @@ class Pixels:
         sleep(timeout + 0.1)
         self.is_holding = False
 
-    def start(self, command_name, colour_name=None, extarg=None):
+    def start(self, command_name, **kwargs):
+        print(kwargs)
+
         if command_name in ['hold']:
             self.is_holding = True
-            self.hold_thread = Thread(target=self.hold_callback, args=(extarg,))
+            self.hold_thread = Thread(target=self.hold_callback, args=(kwargs.get("timeout", 0),))
             self.hold_thread.start()
 
         if command_name in ['off', 'stop']:
@@ -121,18 +123,12 @@ class Pixels:
                 return
 
         command = self.parse_command_name(command_name)
-        colour = self.parse_colour_name(colour_name)
-
-        if extarg is not None:
-            args = (colour, extarg)
-        else:
-            args = (colour, )
 
         if self.proc is not None:
             self.stop()
 
         if command is not None:
-            self.proc = Process(target=command, args=args)
+            self.proc = Process(target=command, kwargs=kwargs)
             self.proc.start()
 
     def stop(self):
@@ -149,9 +145,10 @@ class Pixels:
         """
         Activate a specific pixel with a specific colour
 
-        {colour} is a tuple of ({red}, {green}, {blue})
+        {colour} is a name to be parsed)
         """
-        self.dev.set_pixel(pixel, colour[0], colour[1], colour[2])
+        _colour = self.parse_colour_name(colour)
+        self.dev.set_pixel(pixel, _colour[0], _colour[1], _colour[2])
         self.dev.show()
 
     def off(self):
@@ -159,16 +156,16 @@ class Pixels:
         Turn off all pixels
         """
         for i in range(self.PIXELS_N):
-            self.show(i, (0, 0, 0))
+            self.show(i, None)
 
-    def solid(self, colour):
+    def solid(self, colour="white"):
         """
-        Show a solid colour ({red}, {green}, {blue}) on all pixels until stopped
+        Show a solid colour on all pixels until stopped
         """
         for i in range(self.PIXELS_N):
             self.show(i, colour)
 
-    def hold(self, colour, holdtime=5):
+    def hold(self, colour="white", holdtime=5):
         """
         Hold a solid colour for {holdtime} or until stopped
         """
@@ -176,7 +173,7 @@ class Pixels:
         sleep(holdtime)
         self.off()
 
-    def flash(self, colour, interval=1):
+    def flash(self, colour="white", interval=1):
         """
         Flash a solid colour at {interval} (half on, half off) until stopped
         """
@@ -186,18 +183,22 @@ class Pixels:
             self.off()
             sleep(interval/2)
 
-    def spin(self, colour, interval=1):
+    def spin(self, colour="white", interval=1, direction="cw"):
         """
-        Spin a colour around the pixels, with each rotation taking {interval}, until stopped
+        Spin a colour around the pixels in {direction} (cw or ccw), with each rotation taking {interval}, until stopped
         """
+        if direction == 'ccw':
+            pixel_range = range(self.PIXELS_N)
+        else:
+            pixel_range = reversed(range(self.PIXELS_N))
+
         while True:
             for i in range(self.PIXELS_N):
                 self.show(i, colour)
                 sleep(interval/self.PIXELS_N)
-                self.show(i, (0, 0, 0))
+                self.show(i, None)
 
 class Daemon:
-                
     def __init__(self):
         # Setup the socket listener
         try:
@@ -237,26 +238,21 @@ class Daemon:
                 continue
     
             # Commands come in with the form:
-            #   {action} {colour_name} {extra_args}
+            #   {action} {args}
             command = data[0]
+            args = dict()
+            for arg in data[1:]:
+                arg_name, arg_value = arg.split('=')
+                try:
+                    arg_value = int(arg_value)
+                except ValueError:
+                    pass
+                args[arg_name] = arg_value
     
-            try:
-                colour = data[1]
-            except IndexError:
-                colour = None
-    
-            try:
-                extarg = int(data[2])
-            except IndexError:
-                extarg = None
-    
-            print(f"Received command: {command}; colour: {colour}; extra arg: {extarg}")
+            print(f"Received command: {command}; args: {args}")
     
             # Execute the new command
-            if extarg is not None:
-                self.pixels.start(command, colour, extarg)
-            else:
-                self.pixels.start(command, colour)
+            self.pixels.start(command, **args)
    
 if __name__ == '__main__':
     daemon = Daemon()

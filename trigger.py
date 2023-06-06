@@ -37,19 +37,22 @@ def usage():
     print('Actions:')
     print('  off: Turn off LEDs; {colour} is ignored/optional')
     print('  on: Turn on LEDs until next action')
-    print('  flash: Flash LEDs until next action; {extarg} is the optional flash interval (default 1s)')
-    print('  spin: Spin the LEDs until next action; {extarg} is the optional cycle time (default 1s)')
-    print('  hold: Keep LEDs on for {extarg} seconds (default 5s) unless overridden')
+    print('  flash: Flash LEDs until next action; arg {interval=} is the optional flash interval (default 1s)')
+    print('  spin: Spin the LEDs until next action; arg {interval} is the optional cycle time (default 1s) and {direction} is the direction (cw for clockwise or ccw for counterclockwise)')
+    print('  hold: Keep LEDs on for {holdtime} seconds (default 5s) unless overridden')
     print('')
     print('Colours:')
     print('  white red blue green yellow cyan magenta')
     print('')
+    print('Args:')
+    print('  All keyworded args are optional, including colour which defaults to "white"')
+    print('')
     print('Examples:')
     print('  $ trigger.py off')
-    print('  $ trigger.py on red')
-    print('  $ trigger.py flash cyan')
-    print('  $ trigger.py spin yellow')
-    print('  $ trigger.py hold white')
+    print('  $ trigger.py on colour=red')
+    print('  $ trigger.py flash colour=cyan interval=2')
+    print('  $ trigger.py spin colour=yellow interval=1 direction=ccw')
+    print('  $ trigger.py hold colour=white holdtime=5')
 
 # Define our socket to talk to the daemon
 COMMAND_SOCKET = '/run/shm/respeaker-led.sock'
@@ -66,6 +69,8 @@ if cmd == '':
     # Print usage and exit with failure
     usage()
     exit(1)
+
+# Map arguments 
 
 # Try to open the socket writeable
 try:
