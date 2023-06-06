@@ -107,8 +107,6 @@ class Pixels:
         self.is_holding = False
 
     def start(self, command_name, **kwargs):
-        print(kwargs)
-
         if command_name in ['hold']:
             self.is_holding = True
             self.hold_thread = Thread(target=self.hold_callback, args=(kwargs.get("timeout", 0),))
