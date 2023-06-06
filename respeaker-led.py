@@ -186,12 +186,12 @@ class Pixels:
         Spin a colour around the pixels in {direction} (cw or ccw), with each rotation taking {interval}, until stopped
         """
         if direction == 'ccw':
-            pixel_range = range(self.PIXELS_N)
+            pixel_range = list(reversed(list(range(self.PIXELS_N))))
         else:
-            pixel_range = reversed(range(self.PIXELS_N))
+            pixel_range = list(range(self.PIXELS_N))
 
         while True:
-            for i in range(self.PIXELS_N):
+            for i in pixel_range:
                 self.show(i, colour)
                 sleep(interval/self.PIXELS_N)
                 self.show(i, None)
