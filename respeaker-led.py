@@ -109,7 +109,7 @@ class Pixels:
     def start(self, command_name, **kwargs):
         if command_name in ['hold']:
             self.is_holding = True
-            self.hold_thread = Thread(target=self.hold_callback, args=(kwargs.get("timeout", 0),))
+            self.hold_thread = Thread(target=self.hold_callback, args=(kwargs.get("holdtime", 5),))
             self.hold_thread.start()
 
         if command_name in ['off', 'stop']:
